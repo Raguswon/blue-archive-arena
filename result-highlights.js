@@ -30,20 +30,27 @@
   function markTeam(teamEl, query) {
     if (!teamEl) return;
     const cards = [...teamEl.querySelectorAll(".battle-char")];
-    cards.forEach((el) => el.classList.remove("position-mismatch"));
+    cards.forEach((el) => el.classList.remove("position-mismatch", "character-mismatch"));
     const actual = cards.map((el) => el.querySelector("strong")?.textContent.trim() || "");
+    const actualStrikers = actual.slice(0, 4);
 
     for (let i = 0; i < 4; i++) {
       if (!query[i]) continue;
-      if (actual[i] !== query[i]) cards[i]?.classList.add("position-mismatch");
+      if (actual[i] === query[i]) continue;
+
+      if (actualStrikers.includes(query[i])) {
+        cards[i]?.classList.add("position-mismatch");
+      } else {
+        cards[i]?.classList.add("character-mismatch");
+      }
     }
 
-    const querySp = query.slice(4, 6).filter(Boolean);
-    if (!querySp.length) return;
+    // SP1 / SP2 are treated as interchangeable. A queried SP is only red when absent.
     const actualSp = actual.slice(4, 6);
-    querySp.forEach((name, offset) => {
-      if (!actualSp.includes(name)) cards[4 + offset]?.classList.add("position-mismatch");
-    });
+    for (let i = 4; i < 6; i++) {
+      if (!query[i]) continue;
+      if (!actualSp.includes(query[i])) cards[i]?.classList.add("character-mismatch");
+    }
   }
 
   function applyCard(card) {
