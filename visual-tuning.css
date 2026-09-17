@@ -47,3 +47,63 @@
   text-decoration: underline;
   opacity: 1;
 }
+
+/* Result sorting controls: keep labels and priority buttons horizontal. */
+.result-stage-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.sort-control {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex-wrap: wrap;
+  writing-mode: horizontal-tb !important;
+  text-orientation: mixed !important;
+}
+
+.sort-control > select {
+  min-width: 180px;
+}
+
+.side-priority {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: stretch !important;
+  width: auto !important;
+  margin: 0 !important;
+}
+
+.side-priority-btn {
+  writing-mode: horizontal-tb !important;
+  text-orientation: mixed !important;
+  white-space: nowrap !important;
+  min-width: 88px;
+  min-height: 38px;
+  padding: 8px 14px;
+}
+
+@media (max-width: 700px) {
+  .result-stage-head {
+    align-items: flex-start;
+  }
+
+  .sort-control {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+  }
+
+  .sort-control > select {
+    flex: 1 1 180px;
+    min-width: 0;
+  }
+
+  .side-priority {
+    flex: 0 0 auto !important;
+  }
+}
