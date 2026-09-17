@@ -9,7 +9,7 @@
   // Known characters that are present in the current PvP dataset but are not bundled in avatar-map.js.
   // Seed them immediately so the UI does not wait for the remote metadata YAML before showing an icon.
   const STATIC_STUDENTS = [
-    { id: 10095, jp: "ジュリ（アルバイト）", tw: "茱莉(打工)" },
+    { id: 10114, jp: "ジュリ（アルバイト）", tw: "茱莉(打工)" },
   ];
   STATIC_STUDENTS.forEach((student) => {
     byJp.set(student.jp, student.id);
