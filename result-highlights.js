@@ -5,9 +5,6 @@
   if (!results) return;
 
   function selectedQueryNames() {
-    // Preserve the six input slots. An empty slot must stay empty; otherwise
-    // filtering only selected names shifts SP/STRIKER positions and causes
-    // unqueried slots to be highlighted incorrectly.
     return [...document.querySelectorAll("#defense-inputs .defense-picker-host")]
       .map((host) => host.querySelector(".picker-selected-name")?.textContent.trim() || "");
   }
@@ -39,11 +36,13 @@
     const queryStrikers = query.slice(0, 4);
     const wantedStrikers = new Set(queryStrikers.filter(Boolean));
 
-    // Only explicitly queried STRIKER slots may receive a highlight.
-    // - same character, same slot: normal
-    // - expected character exists elsewhere: yellow (position mismatch)
-    // - expected character is absent/replaced: red (character mismatch)
-    // Empty query slots remain neutral regardless of the result character.
+    // Highlight only explicitly queried STRIKER slots.
+    // Exact same character in the same slot = normal.
+    // The result character is one of the queried characters but belongs to a
+    // different queried slot = yellow (position mismatch).
+    // The result character is not among the queried characters = red
+    // (different/replacement character).
+    // Empty query slots are always neutral.
     for (let i = 0; i < 4; i++) {
       const expectedName = queryStrikers[i];
       if (!expectedName) continue;
@@ -51,14 +50,14 @@
       const actualName = actual[i];
       if (actualName === expectedName) continue;
 
-      if (actual.slice(0, 4).includes(expectedName) || wantedStrikers.has(actualName)) {
+      if (wantedStrikers.has(actualName)) {
         cards[i]?.classList.add("position-mismatch");
       } else {
         cards[i]?.classList.add("character-mismatch");
       }
     }
 
-    // SP1 / SP2 are interchangeable. Only the explicitly queried SP characters
+    // SP1 / SP2 are interchangeable. Only explicitly queried SP characters
     // matter; an unspecified SP slot is never highlighted.
     const querySp = query.slice(4, 6).filter(Boolean);
     if (!querySp.length) return;
@@ -68,9 +67,6 @@
     const missing = querySp.filter((name) => !actualSp.includes(name));
     if (!missing.length) return;
 
-    // Mark only enough non-query SP characters to represent queried characters
-    // that are actually missing. If one SP slot was left blank, the extra
-    // character occupying that unspecified slot remains neutral.
     const replacementIndexes = [4, 5].filter((i) => actual[i] && !wantedSp.has(actual[i]));
     replacementIndexes.slice(0, missing.length).forEach((i) => {
       cards[i]?.classList.add("character-mismatch");
