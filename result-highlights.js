@@ -35,31 +35,35 @@
     const actual = cards.map((el) => el.querySelector("strong")?.textContent.trim() || "");
     const queryStrikers = query.slice(0, 4);
     const actualStrikers = actual.slice(0, 4);
+    const queried = new Set(queryStrikers.filter(Boolean));
 
-    // STRIKER highlighting is character-based, not slot-based:
-    // 1. A queried character present in its requested slot -> normal.
-    // 2. A queried character present in another STRIKER slot -> mark THAT
-    //    character yellow. This includes moving into an unspecified slot.
-    // 3. A queried character absent from the result -> mark the character
-    //    occupying its requested slot red, unless that occupant is itself a
-    //    queried character (which is a position mismatch and stays yellow).
-    // 4. Unspecified slots are otherwise neutral.
+    // First mark every queried STRIKER that exists but is in the wrong slot.
+    // The queried character itself is yellow, even if it moved into a slot the
+    // user did not specify.
+    for (let expectedIndex = 0; expectedIndex < 4; expectedIndex++) {
+      const wanted = queryStrikers[expectedIndex];
+      if (!wanted) continue;
+      const actualIndex = actualStrikers.indexOf(wanted);
+      if (actualIndex >= 0 && actualIndex !== expectedIndex) {
+        cards[actualIndex]?.classList.add("position-mismatch");
+      }
+    }
+
+    // Then evaluate every explicitly queried slot. If its requested character
+    // is not actually in that slot, the current occupant is:
+    // - yellow when it is another queried character (position swap/move)
+    // - red when it is not one of the queried characters (replacement)
+    // This is independent of whether the requested character appears elsewhere.
+    // Therefore e.g. 白子 moved D1 -> D2 makes 白子 yellow at D2, while an
+    // unrelated 伊織 occupying queried D3 is still red.
     for (let expectedIndex = 0; expectedIndex < 4; expectedIndex++) {
       const wanted = queryStrikers[expectedIndex];
       if (!wanted) continue;
 
-      const actualIndex = actualStrikers.indexOf(wanted);
-      if (actualIndex === expectedIndex) continue;
-
-      if (actualIndex >= 0) {
-        cards[actualIndex]?.classList.add("position-mismatch");
-        continue;
-      }
-
       const occupant = actualStrikers[expectedIndex];
-      if (!occupant) continue;
-      const occupantQueryIndex = queryStrikers.indexOf(occupant);
-      if (occupantQueryIndex >= 0) {
+      if (!occupant || occupant === wanted) continue;
+
+      if (queried.has(occupant)) {
         cards[expectedIndex]?.classList.add("position-mismatch");
       } else {
         cards[expectedIndex]?.classList.add("character-mismatch");
