@@ -6,7 +6,7 @@
   if (!data?.matches || !root) return;
 
   const STORAGE_KEY = "arena-search-missing-v3";
-  const MIN_SAMPLES = 5;
+  const MIN_DEFENSES = 5;
   const LIMIT = 10;
   const RAW_STUDENTS = "https://raw.githubusercontent.com/ba-archive/blue-archive/main/apps/blue-archive-story-viewer/public/config/yaml/students.yaml";
   const twNames = new Map();
@@ -16,6 +16,7 @@
     catch (_) { return new Set(); }
   }
 
+  // A1-A4 keep their numbered positions. SP1/SP2 are treated as interchangeable.
   function normalizeTeam(team) {
     const sp = team.slice(4, 6).slice().sort((a, b) => a.localeCompare(b, "ja"));
     return [...team.slice(0, 4), ...sp];
@@ -68,25 +69,48 @@
     const blocked = unavailable();
     const groups = new Map();
 
+    // First group by attacking lineup, then by DISTINCT defending lineup.
+    // Repeated games against the same defense do not increase that defense's weight.
     for (const match of data.matches) {
       if (match.a.some((name) => blocked.has(name))) continue;
-      const team = normalizeTeam(match.a);
-      const key = teamKey(team);
-      if (!groups.has(key)) groups.set(key, { team, wins: 0, losses: 0, samples: 0 });
-      const g = groups.get(key);
-      g.samples++;
-      match.w ? g.wins++ : g.losses++;
+
+      const attackTeam = normalizeTeam(match.a);
+      const attackKey = teamKey(attackTeam);
+      if (!groups.has(attackKey)) {
+        groups.set(attackKey, { team: attackTeam, defenses: new Map(), rawGames: 0 });
+      }
+
+      const group = groups.get(attackKey);
+      const defenseTeam = normalizeTeam(match.d);
+      const defenseKey = teamKey(defenseTeam);
+      if (!group.defenses.has(defenseKey)) {
+        group.defenses.set(defenseKey, { wins: 0, losses: 0, games: 0 });
+      }
+
+      const matchup = group.defenses.get(defenseKey);
+      matchup.games++;
+      group.rawGames++;
+      match.w ? matchup.wins++ : matchup.losses++;
     }
 
     const ranked = [...groups.values()]
-      .filter((g) => g.samples >= MIN_SAMPLES)
-      .map((g) => ({ ...g, winRate: g.wins / g.samples }))
-      .sort((a, b) => b.winRate - a.winRate || b.samples - a.samples)
+      .map((g) => {
+        const matchups = [...g.defenses.values()];
+        const defenseCount = matchups.length;
+        // Each distinct defense gets equal weight. If it was played repeatedly,
+        // those repeats only estimate that one matchup's win rate.
+        const blindRate = defenseCount
+          ? matchups.reduce((sum, m) => sum + m.wins / m.games, 0) / defenseCount
+          : 0;
+        return { ...g, defenseCount, blindRate };
+      })
+      .filter((g) => g.defenseCount >= MIN_DEFENSES)
+      .sort((a, b) => b.blindRate - a.blindRate || b.defenseCount - a.defenseCount || b.rawGames - a.rawGames)
       .slice(0, LIMIT);
 
     root.innerHTML = "";
     if (!ranked.length) {
-      root.innerHTML = '<div class="empty-state"><strong>目前沒有足夠樣本的盲打隊伍</strong></div>';
+      root.innerHTML = '<div class="empty-state"><strong>目前沒有打過至少 5 種不同防守陣容的隊伍</strong></div>';
       return;
     }
 
@@ -95,8 +119,8 @@
       card.className = "result-card matchup-card";
       const head = document.createElement("div");
       head.className = "matchup-head";
-      const pct = Math.round(g.winRate * 1000) / 10;
-      head.innerHTML = `<span class="rank-badge">#${idx + 1}</span><div class="matchup-stats"><b>盲打勝率 ${pct}%</b><span>${g.wins}勝 ${g.losses}敗</span><span>${g.samples} 場</span></div>`;
+      const pct = Math.round(g.blindRate * 1000) / 10;
+      head.innerHTML = `<span class="rank-badge">#${idx + 1}</span><div class="matchup-stats"><b>盲打勝率 ${pct}%</b><span>${g.defenseCount} 種不同防守</span><span>原始 ${g.rawGames} 場</span></div>`;
       card.append(head, renderTeam(g.team));
       root.append(card);
     });
