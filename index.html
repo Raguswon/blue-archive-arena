@@ -11,11 +11,11 @@
   <link rel="stylesheet" href="blind-ranking.css?v=20260917-1" />
   <link rel="stylesheet" href="language-toggle.css?v=20260917-1" />
   <link rel="stylesheet" href="result-highlights.css?v=20260917-2" />
-  <link rel="stylesheet" href="visual-tuning.css?v=20260917-1" />
+  <link rel="stylesheet" href="visual-tuning.css?v=20260917-2" />
 </head>
 <body>
   <main class="app-shell shell">
-    <section class="hero-card"><div><div class="eyebrow">BLUE ARCHIVE PVP · S11 OUTDOOR</div><h1>對抗戰陣容搜尋</h1></div><div class="hero-meta"><div class="language-switch" role="group" aria-label="Language"><button type="button" data-lang-choice="zh-Hant" class="active">中文</button><button type="button" data-lang-choice="ja">日本語</button></div><div class="dataset-pill" id="dataset-pill">讀取資料中</div><div class="version-pill" id="footer-version">資料快照</div></div></section>
+    <section class="hero-card"><div><div class="eyebrow">BLUE ARCHIVE PVP · S11 OUTDOOR</div><h1>對抗戰陣容搜尋</h1><a class="data-source-link" href="https://docs.google.com/spreadsheets/d/12KPs3jY6IbdQOeOLc9a1Pgb9oAaiYB4bbUED37Il09U/edit?gid=0#gid=0" target="_blank" rel="noopener noreferrer">資料來源：対抗戦シートS11（屋外戦）</a></div><div class="hero-meta"><div class="language-switch" role="group" aria-label="Language"><button type="button" data-lang-choice="zh-Hant" class="active">中文</button><button type="button" data-lang-choice="ja">日本語</button></div><div class="dataset-pill" id="dataset-pill">讀取資料中</div><div class="version-pill" id="footer-version">資料快照</div></div></section>
     <section class="control-stage"><div class="control-grid">
       <section class="sketch-panel missing-panel"><div class="panel-head"><div><div class="panel-title">沒有的角色</div><div class="panel-help">搜尋或從下拉選單選角色，加入後會自動排除含該角色的進攻隊。</div></div><button class="ghost-btn" id="clear-missing" type="button">全部清除</button></div><div id="missing-picker" class="missing-picker-host"></div><div id="missing-tags" class="avatar-tags" aria-live="polite"></div></section>
       <section class="sketch-panel defense-panel"><div class="panel-head"><div><div class="panel-title">查詢陣容</div><div class="panel-help">可輸入我方或敵方陣容；不知道的位置可留空。系統會同時搜尋進攻方與防守方紀錄。</div></div><button class="ghost-btn" id="clear-defense" type="button">清空</button></div><div class="enemy-line" id="defense-inputs"><div class="line-slot"><span>1</span><div class="defense-picker-host"></div></div><div class="line-slot"><span>2</span><div class="defense-picker-host"></div></div><div class="line-slot"><span>3</span><div class="defense-picker-host"></div></div><div class="line-slot"><span>4</span><div class="defense-picker-host"></div></div><div class="line-slot sp-slot"><span>SP1</span><div class="defense-picker-host"></div></div><div class="line-slot sp-slot"><span>SP2</span><div class="defense-picker-host"></div></div></div><div class="toggle-strip"><label class="toggle-line"><input id="exact-only" type="checkbox" /><span>只看已知位置完全相同</span></label></div><div class="action-row auto-result-row"><div id="form-message" class="form-message" role="status"></div></div></section>
@@ -25,6 +25,6 @@
     <footer class="page-footer"><span>角色頭像資料來源：SchaleDB</span><span>歷史統計僅供配隊參考，不代表單場必勝。</span></footer>
   </main>
   <template id="result-template"><article class="result-card"><div class="result-row-head"><div class="rank-badge"></div><div class="result-summary"><div class="match-badges"></div><div class="metrics-inline"></div></div><button type="button" class="copy-btn">複製隊伍</button></div><div class="attack-lineup-wrap"><div class="line-caption">推薦進攻隊</div><div class="team-slots"></div></div><div class="result-foot"></div></article></template>
-  <script src="data.js"></script><script src="avatar-map.js"></script><script src="student-meta.js"></script><script src="app.js"></script><script src="blind-ranking.js?v=20260917-1"></script><script src="short-message.js?v=20260917-1"></script><script src="language-toggle.js?v=20260917-1"></script><script src="result-highlights.js?v=20260917-2"></script>
+  <script src="data.js"></script><script src="avatar-map.js"></script><script src="student-meta.js"></script><script src="app.js"></script><script src="blind-ranking.js?v=20260917-1"></script><script src="short-message.js?v=20260917-1"></script><script src="language-toggle.js?v=20260917-2"></script><script src="result-highlights.js?v=20260917-2"></script>
 </body>
 </html>
