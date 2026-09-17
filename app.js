@@ -10,6 +10,11 @@
   if(!source.includes(oldCompare))throw new Error("compareLineup anchor missing");
   source=source.replace(oldCompare,newCompare);
 
+  // The old v16 source still knows about the removed position-priority checkbox.
+  // Strip both references so the page has no hidden compatibility control.
+  source=source.replace(`    positionPriority: $("#position-priority"),\n`,"");
+  source=source.replace(`  els.positionPriority.onchange=()=>{if(getLineup().some(Boolean))search()};\n`,"");
+
   // Do not block the controls on the large remote multilingual-name YAML.
   const oldLoad=`  async function loadMeta() {\n    try {\n      const r = await fetch(RAW_STUDENTS, {cache:"force-cache"});\n      if (r.ok) parseStudentYaml(await r.text());\n    } catch (_) {}\n    buildPickers();\n    renderMissing();\n  }`;
   const newLoad=`  function loadMeta() {\n    buildPickers();\n    renderMissing();\n    fetch(RAW_STUDENTS,{cache:"force-cache"}).then(r=>r.ok?r.text():"").then(t=>{if(t)parseStudentYaml(t)}).catch(()=>{});\n  }`;
@@ -90,7 +95,8 @@
     const sameCover=a.cover===b.cover?1:0;
     const sameAttack=a.attack===b.attack?1:0;
     const sameDefense=a.defense===b.defense?1:0;
-    const slotFit=(!els.positionPriority.checked||wantedIndex===candidateIndex)?1:0;
+    // Slot preference is always active now: same numbered slot is a bonus, never a hard constraint.
+    const slotFit=wantedIndex===candidateIndex?1:0;
 
     if(a.role==='A'){
       // STRIKER attacker: countering enemy armor + actual movement geometry matter most.
