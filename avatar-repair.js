@@ -5,7 +5,18 @@
   const ICON_BASE = "https://raw.githubusercontent.com/lonqie/SchaleDB/main/images/student/icon/";
   const byJp = new Map();
   const byTw = new Map();
-  let ready = false;
+
+  // Known characters that are present in the current PvP dataset but are not bundled in avatar-map.js.
+  // Seed them immediately so the UI does not wait for the remote metadata YAML before showing an icon.
+  const STATIC_STUDENTS = [
+    { id: 10095, jp: "ジュリ（アルバイト）", tw: "茱莉(打工)" },
+  ];
+  STATIC_STUDENTS.forEach((student) => {
+    byJp.set(student.jp, student.id);
+    if (student.tw) byTw.set(student.tw, { jp: student.jp, id: student.id });
+  });
+
+  let ready = byJp.size > 0;
 
   function parseYaml(text) {
     let cur = null;
@@ -96,6 +107,9 @@
     }
   });
   observer.observe(document.body, { childList: true, subtree: true });
+
+  // Repair known gaps immediately, then expand coverage from the public metadata in the background.
+  repairAll();
 
   fetch(RAW_STUDENTS, { cache: "force-cache" })
     .then((r) => r.ok ? r.text() : "")
