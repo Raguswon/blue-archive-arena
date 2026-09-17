@@ -566,9 +566,12 @@
       if (!attackMatch && !defenseMatch) continue;
       matchedCount++;
       const querySide = attackMatch && defenseMatch
-        ? (attackMatch.similarity >= defenseMatch.similarity ? "attack" : "defense")
+        ? (state.sidePriority === "attack" ? "attack" : "defense")
         : (attackMatch ? "attack" : "defense");
-      rows.push({ ...m, match: querySide === "attack" ? attackMatch : defenseMatch, querySide });
+      const matchedSides = [];
+      if (attackMatch) matchedSides.push("attack");
+      if (defenseMatch) matchedSides.push("defense");
+      rows.push({ ...m, match: querySide === "attack" ? attackMatch : defenseMatch, querySide, matchedSides });
     }
 
     if (!rows.length && !els.exactOnly.checked) {
@@ -579,9 +582,12 @@
         if (!attackMatch && !defenseMatch) continue;
         matchedCount++;
         const querySide = attackMatch && defenseMatch
-          ? (attackMatch.similarity >= defenseMatch.similarity ? "attack" : "defense")
+          ? (state.sidePriority === "attack" ? "attack" : "defense")
           : (attackMatch ? "attack" : "defense");
-        rows.push({ ...m, match: querySide === "attack" ? attackMatch : defenseMatch, querySide });
+        const matchedSides = [];
+        if (attackMatch) matchedSides.push("attack");
+        if (defenseMatch) matchedSides.push("defense");
+        rows.push({ ...m, match: querySide === "attack" ? attackMatch : defenseMatch, querySide, matchedSides });
       }
 
       if (rows.length) {
@@ -609,7 +615,7 @@
       const g = groups.get(key);
       g.samples++;
       r.w ? g.wins++ : g.losses++;
-      g.querySides.add(r.querySide);
+      (r.matchedSides || [r.querySide]).forEach((side) => g.querySides.add(side));
       if (r.match.similarity > g.best.similarity) g.best = r.match;
     });
 
@@ -722,8 +728,11 @@
     renderResults();
   }
 
-  els.attackPriority?.addEventListener("click", () => setSidePriority("attack"));
-  els.defensePriority?.addEventListener("click", () => setSidePriority("defense"));
+  document.addEventListener("click", (e) => {
+    const button = e.target.closest?.("#attack-priority, #defense-priority");
+    if (!button) return;
+    setSidePriority(button.id === "attack-priority" ? "attack" : "defense");
+  });
   els.exactOnly.onchange = () => { if (getLineup().some(Boolean)) search(); };
 
   els.datasetPill.textContent = `${data.total.toLocaleString()} 場 · ${data.characters.length} 角色`;
