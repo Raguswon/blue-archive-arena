@@ -1,0 +1,38 @@
+.language-switch {
+  display: inline-flex;
+  gap: 3px;
+  padding: 3px;
+  border: 1px solid rgba(90, 100, 130, .18);
+  border-radius: 12px;
+  background: rgba(255,255,255,.58);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.language-switch button {
+  min-height: 34px;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #697089;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.language-switch button.active {
+  background: rgba(102, 119, 255, .14);
+  color: #3546a7;
+}
+
+@media (max-width: 560px) {
+  .language-switch {
+    width: 100%;
+  }
+
+  .language-switch button {
+    flex: 1;
+    min-height: 40px;
+  }
+}
