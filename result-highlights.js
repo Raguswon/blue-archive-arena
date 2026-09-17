@@ -34,31 +34,40 @@
 
     const actual = cards.map((el) => el.querySelector("strong")?.textContent.trim() || "");
     const queryStrikers = query.slice(0, 4);
-    const wantedStrikers = new Set(queryStrikers.filter(Boolean));
+    const actualStrikers = actual.slice(0, 4);
 
-    // Highlight only explicitly queried STRIKER slots.
-    // Exact same character in the same slot = normal.
-    // The result character is one of the queried characters but belongs to a
-    // different queried slot = yellow (position mismatch).
-    // The result character is not among the queried characters = red
-    // (different/replacement character).
-    // Empty query slots are always neutral.
-    for (let i = 0; i < 4; i++) {
-      const expectedName = queryStrikers[i];
-      if (!expectedName) continue;
+    // STRIKER highlighting is character-based, not slot-based:
+    // 1. A queried character present in its requested slot -> normal.
+    // 2. A queried character present in another STRIKER slot -> mark THAT
+    //    character yellow. This includes moving into an unspecified slot.
+    // 3. A queried character absent from the result -> mark the character
+    //    occupying its requested slot red, unless that occupant is itself a
+    //    queried character (which is a position mismatch and stays yellow).
+    // 4. Unspecified slots are otherwise neutral.
+    for (let expectedIndex = 0; expectedIndex < 4; expectedIndex++) {
+      const wanted = queryStrikers[expectedIndex];
+      if (!wanted) continue;
 
-      const actualName = actual[i];
-      if (actualName === expectedName) continue;
+      const actualIndex = actualStrikers.indexOf(wanted);
+      if (actualIndex === expectedIndex) continue;
 
-      if (wantedStrikers.has(actualName)) {
-        cards[i]?.classList.add("position-mismatch");
+      if (actualIndex >= 0) {
+        cards[actualIndex]?.classList.add("position-mismatch");
+        continue;
+      }
+
+      const occupant = actualStrikers[expectedIndex];
+      if (!occupant) continue;
+      const occupantQueryIndex = queryStrikers.indexOf(occupant);
+      if (occupantQueryIndex >= 0) {
+        cards[expectedIndex]?.classList.add("position-mismatch");
       } else {
-        cards[i]?.classList.add("character-mismatch");
+        cards[expectedIndex]?.classList.add("character-mismatch");
       }
     }
 
     // SP1 / SP2 are interchangeable. Only explicitly queried SP characters
-    // matter; an unspecified SP slot is never highlighted.
+    // matter; unspecified SP capacity is neutral.
     const querySp = query.slice(4, 6).filter(Boolean);
     if (!querySp.length) return;
 
