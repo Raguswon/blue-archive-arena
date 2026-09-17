@@ -1,0 +1,17 @@
+.matchup-stats .similarity-perfect {
+  color: #16864b;
+  border-color: rgba(22, 134, 75, .24);
+  background: rgba(37, 181, 102, .09);
+}
+
+.matchup-stats .similarity-partial {
+  color: #c66a12;
+  border-color: rgba(198, 106, 18, .26);
+  background: rgba(245, 158, 11, .10);
+}
+
+.battle-char.position-mismatch {
+  background: rgba(255, 91, 91, .075);
+  border-color: rgba(224, 91, 91, .28);
+  box-shadow: inset 0 0 0 1px rgba(224, 91, 91, .06);
+}
