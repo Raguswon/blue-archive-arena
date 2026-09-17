@@ -15,6 +15,12 @@
   source=source.replace(`    positionPriority: $("#position-priority"),\n`,"");
   source=source.replace(`  els.positionPriority.onchange=()=>{if(getLineup().some(Boolean))search()};\n`,"");
 
+  // Clearing the query must also clear cached result groups; otherwise changing sort/priority can resurrect old cards.
+  source=source.replace(
+    `  els.clearDefense.onclick=()=>{defensePickers.forEach(p=>p.clear());`,
+    `  els.clearDefense.onclick=()=>{defensePickers.forEach(p=>p.clear());state.lastResults=[];`
+  );
+
   // Do not block the controls on the large remote multilingual-name YAML.
   const oldLoad=`  async function loadMeta() {\n    try {\n      const r = await fetch(RAW_STUDENTS, {cache:"force-cache"});\n      if (r.ok) parseStudentYaml(await r.text());\n    } catch (_) {}\n    buildPickers();\n    renderMissing();\n  }`;
   const newLoad=`  function loadMeta() {\n    buildPickers();\n    renderMissing();\n    fetch(RAW_STUDENTS,{cache:"force-cache"}).then(r=>r.ok?r.text():"").then(t=>{if(t)parseStudentYaml(t)}).catch(()=>{});\n  }`;
