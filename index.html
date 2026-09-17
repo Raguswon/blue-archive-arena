@@ -7,127 +7,19 @@
   <meta name="description" content="S11 對抗戰歷史陣容搜尋器：依照缺角與對手防守陣容搜尋對戰紀錄伍。" />
   <title>S11 對抗戰陣容搜尋</title>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="mobile-v16.css" />
 </head>
 <body>
   <main class="app-shell shell">
-    <section class="hero-card">
-      <div>
-        <div class="eyebrow">BLUE ARCHIVE PVP · S11 OUTDOOR</div>
-        <h1>對抗戰陣容搜尋</h1>
-        <p class="subtitle">用你沒有的角色與對面防守陣容，快速找出可用進攻隊。</p>
-      </div>
-      <div class="hero-meta">
-        <div class="dataset-pill" id="dataset-pill">讀取資料中</div>
-        <div class="version-pill" id="footer-version">資料快照</div>
-      </div>
-    </section>
-
-    <section class="control-stage">
-      <div class="control-grid">
-        <section class="sketch-panel missing-panel">
-          <div class="panel-head">
-            <div>
-              <div class="panel-title">沒有的角色</div>
-              <div class="panel-help">搜尋或從下拉選單選角色，加入後會自動排除含該角色的進攻隊。</div>
-            </div>
-            <button class="ghost-btn" id="clear-missing" type="button">全部清除</button>
-          </div>
-
-          <div id="missing-picker" class="missing-picker-host"></div>
-
-          <div id="missing-tags" class="avatar-tags" aria-live="polite"></div>
-        </section>
-
-        <section class="sketch-panel defense-panel">
-          <div class="panel-head">
-            <div>
-              <div class="panel-title">查詢陣容</div>
-              <div class="panel-help">可輸入我方或敵方陣容；不知道的位置可留空。系統會同時搜尋進攻方與防守方紀錄。</div>
-            </div>
-            <button class="ghost-btn" id="clear-defense" type="button">清空</button>
-          </div>
-
-          <div class="enemy-line" id="defense-inputs">
-            <div class="line-slot"><span>1</span><div class="defense-picker-host"></div></div>
-            <div class="line-slot"><span>2</span><div class="defense-picker-host"></div></div>
-            <div class="line-slot"><span>3</span><div class="defense-picker-host"></div></div>
-            <div class="line-slot"><span>4</span><div class="defense-picker-host"></div></div>
-            <div class="line-slot sp-slot"><span>SP1</span><div class="defense-picker-host"></div></div>
-            <div class="line-slot sp-slot"><span>SP2</span><div class="defense-picker-host"></div></div>
-          </div>
-
-          <div class="toggle-strip">
-            <label class="toggle-line"><input id="position-priority" type="checkbox" checked /><span>站位優先</span></label>
-            <label class="toggle-line"><input id="exact-only" type="checkbox" /><span>只看已知位置完全相同</span></label>
-          </div>
-
-          <div class="action-row auto-result-row">
-            <div id="form-message" class="form-message" role="status">選擇角色後會自動更新結果</div>
-          </div>
-        </section>
-      </div>
-    </section>
-
-    <section class="result-stage">
-      <div class="result-stage-head">
-        <div>
-          <div class="panel-title">結果</div>
-          <div class="panel-help">依陣容符合度、勝率、保守勝率與樣本數綜合排序。</div>
-        </div>
-        <label class="sort-control">排序
-          <select id="sort-select">
-            <option value="recommended">綜合推薦</option>
-            <option value="winrate">勝率</option>
-            <option value="samples">樣本數</option>
-            <option value="similarity">陣容符合度</option>
-          </select><div class="side-priority" role="group" aria-label="排序方向">
-              <button id="attack-priority" type="button" class="side-priority-btn active">進攻優先</button>
-              <button id="defense-priority" type="button" class="side-priority-btn">防守優先</button>
-            </div>
-        </label>
-      </div>
-
-      <div class="summary-grid" id="summary-grid">
-        <article class="stat-card"><span>歷史對戰</span><strong id="stat-total">—</strong></article>
-        <article class="stat-card"><span>排除缺角後</span><strong id="stat-eligible">—</strong></article>
-        <article class="stat-card"><span>符合紀錄</span><strong id="stat-matched">—</strong></article>
-        <article class="stat-card"><span>對戰組合</span><strong id="stat-teams">—</strong></article>
-      </div>
-
-      <div id="results" class="results-list">
-        <div class="empty-state">
-          <strong>先輸入查詢陣容</strong>
-          <span>至少選 1 個角色；可以是我方或敵方，系統會搜尋兩邊。</span>
-        </div>
-      </div>
-    </section>
-
-    <footer class="page-footer">
-      <span>角色頭像資料來源：SchaleDB</span>
-      <span>歷史統計僅供配隊參考，不代表單場必勝。</span>
-    </footer>
+    <section class="hero-card"><div><div class="eyebrow">BLUE ARCHIVE PVP · S11 OUTDOOR</div><h1>對抗戰陣容搜尋</h1><p class="subtitle">用你沒有的角色與對面防守陣容，快速找出可用進攻隊。</p></div><div class="hero-meta"><div class="dataset-pill" id="dataset-pill">讀取資料中</div><div class="version-pill" id="footer-version">資料快照</div></div></section>
+    <section class="control-stage"><div class="control-grid">
+      <section class="sketch-panel missing-panel"><div class="panel-head"><div><div class="panel-title">沒有的角色</div><div class="panel-help">搜尋或從下拉選單選角色，加入後會自動排除含該角色的進攻隊。</div></div><button class="ghost-btn" id="clear-missing" type="button">全部清除</button></div><div id="missing-picker" class="missing-picker-host"></div><div id="missing-tags" class="avatar-tags" aria-live="polite"></div></section>
+      <section class="sketch-panel defense-panel"><div class="panel-head"><div><div class="panel-title">查詢陣容</div><div class="panel-help">可輸入我方或敵方陣容；不知道的位置可留空。系統會同時搜尋進攻方與防守方紀錄。</div></div><button class="ghost-btn" id="clear-defense" type="button">清空</button></div><div class="enemy-line" id="defense-inputs"><div class="line-slot"><span>1</span><div class="defense-picker-host"></div></div><div class="line-slot"><span>2</span><div class="defense-picker-host"></div></div><div class="line-slot"><span>3</span><div class="defense-picker-host"></div></div><div class="line-slot"><span>4</span><div class="defense-picker-host"></div></div><div class="line-slot sp-slot"><span>SP1</span><div class="defense-picker-host"></div></div><div class="line-slot sp-slot"><span>SP2</span><div class="defense-picker-host"></div></div></div><div class="toggle-strip"><label class="toggle-line"><input id="position-priority" type="checkbox" checked /><span>站位優先</span></label><label class="toggle-line"><input id="exact-only" type="checkbox" /><span>只看已知位置完全相同</span></label></div><div class="action-row auto-result-row"><div id="form-message" class="form-message" role="status">選擇角色後會自動更新結果</div></div></section>
+    </div></section>
+    <section class="result-stage"><div class="result-stage-head"><div><div class="panel-title">結果</div><div class="panel-help">依陣容符合度、勝率、保守勝率與樣本數綜合排序。</div></div><label class="sort-control">排序<select id="sort-select"><option value="recommended">綜合推薦</option><option value="winrate">勝率</option><option value="samples">樣本數</option><option value="similarity">陣容符合度</option></select><div class="side-priority" role="group" aria-label="排序方向"><button id="attack-priority" type="button" class="side-priority-btn active">進攻優先</button><button id="defense-priority" type="button" class="side-priority-btn">防守優先</button></div></label></div><div class="summary-grid" id="summary-grid"><article class="stat-card"><span>歷史對戰</span><strong id="stat-total">—</strong></article><article class="stat-card"><span>排除缺角後</span><strong id="stat-eligible">—</strong></article><article class="stat-card"><span>符合紀錄</span><strong id="stat-matched">—</strong></article><article class="stat-card"><span>對戰組合</span><strong id="stat-teams">—</strong></article></div><div id="results" class="results-list"><div class="empty-state"><strong>先輸入查詢陣容</strong><span>至少選 1 個角色；可以是我方或敵方，系統會搜尋兩邊。</span></div></div></section>
+    <footer class="page-footer"><span>角色頭像資料來源：SchaleDB</span><span>歷史統計僅供配隊參考，不代表單場必勝。</span></footer>
   </main>
-
-  <template id="result-template">
-    <article class="result-card">
-      <div class="result-row-head">
-        <div class="rank-badge"></div>
-        <div class="result-summary">
-          <div class="match-badges"></div>
-          <div class="metrics-inline"></div>
-        </div>
-        <button type="button" class="copy-btn">複製隊伍</button>
-      </div>
-      <div class="attack-lineup-wrap">
-        <div class="line-caption">推薦進攻隊</div>
-        <div class="team-slots"></div>
-      </div>
-      <div class="result-foot"></div>
-    </article>
-  </template>
-
-  <script src="data.js"></script>
-  <script src="avatar-map.js"></script>
-  <script src="app.js"></script>
+  <template id="result-template"><article class="result-card"><div class="result-row-head"><div class="rank-badge"></div><div class="result-summary"><div class="match-badges"></div><div class="metrics-inline"></div></div><button type="button" class="copy-btn">複製隊伍</button></div><div class="attack-lineup-wrap"><div class="line-caption">推薦進攻隊</div><div class="team-slots"></div></div><div class="result-foot"></div></article></template>
+  <script src="data.js"></script><script src="avatar-map.js"></script><script src="app.js"></script>
 </body>
 </html>
