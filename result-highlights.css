@@ -10,8 +10,16 @@
   background: rgba(245, 158, 11, .10);
 }
 
+/* Query character exists in the lineup, but is standing in another STRIKER slot. */
 .battle-char.position-mismatch {
-  background: rgba(255, 91, 91, .075);
-  border-color: rgba(224, 91, 91, .28);
-  box-shadow: inset 0 0 0 1px rgba(224, 91, 91, .06);
+  background: rgba(255, 204, 77, .14);
+  border-color: rgba(214, 154, 18, .42);
+  box-shadow: inset 0 0 0 1px rgba(214, 154, 18, .08);
+}
+
+/* Query character is not present on the matched side at all. */
+.battle-char.character-mismatch {
+  background: rgba(255, 91, 91, .11);
+  border-color: rgba(224, 91, 91, .40);
+  box-shadow: inset 0 0 0 1px rgba(224, 91, 91, .08);
 }
