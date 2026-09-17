@@ -1,0 +1,70 @@
+/* Blind lineup ranking: compact on desktop, readable on mobile. */
+#blind-results {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+#blind-results .empty-state {
+  grid-column: 1 / -1;
+}
+
+.blind-card {
+  min-width: 0;
+  padding: 14px 16px;
+}
+
+.blind-card .matchup-head {
+  margin-bottom: 12px;
+}
+
+.blind-card .matchup-stats {
+  min-width: 0;
+}
+
+.blind-team {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 6px;
+  overflow: visible;
+}
+
+.blind-team .battle-char {
+  min-width: 0;
+  padding: 6px 3px;
+}
+
+.blind-team .battle-avatar {
+  width: min(56px, 100%);
+}
+
+.blind-team .battle-char strong {
+  font-size: 9px;
+}
+
+@media (max-width: 1100px) {
+  #blind-results {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .blind-card {
+    padding: 13px 12px;
+  }
+
+  .blind-team {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    overflow: visible !important;
+    gap: 7px;
+  }
+
+  .blind-team .battle-avatar {
+    width: min(54px, 100%);
+  }
+}
+
+@media (max-width: 380px) {
+  .blind-team {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
