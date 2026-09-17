@@ -14,11 +14,23 @@
 }
 
 .picker-selected,
-.picker-menu,
 .sort-control select,
 .side-priority-btn,
 .ghost-btn {
   background-color: rgba(255,255,255,.62);
+}
+
+/* Dropdown menus should stay opaque for readability over the illustrated background. */
+.picker-menu {
+  background: #fff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.picker-menu .picker-search,
+.picker-menu .picker-option,
+.picker-menu .picker-empty {
+  background-color: #fff;
 }
 
 .data-source-link {
