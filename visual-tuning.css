@@ -1,0 +1,22 @@
+.hero-card,
+.sketch-panel,
+.result-stage {
+  background: rgba(255,255,255,.54);
+  backdrop-filter: blur(11px);
+  -webkit-backdrop-filter: blur(11px);
+}
+
+.result-card,
+.stat-card {
+  background: rgba(255,255,255,.62);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.picker-selected,
+.picker-menu,
+.sort-control select,
+.side-priority-btn,
+.ghost-btn {
+  background-color: rgba(255,255,255,.62);
+}
