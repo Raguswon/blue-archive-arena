@@ -31,26 +31,41 @@
     if (!teamEl) return;
     const cards = [...teamEl.querySelectorAll(".battle-char")];
     cards.forEach((el) => el.classList.remove("position-mismatch", "character-mismatch"));
+
     const actual = cards.map((el) => el.querySelector("strong")?.textContent.trim() || "");
-    const actualStrikers = actual.slice(0, 4);
+    const queryStrikers = query.slice(0, 4);
+    const wantedStrikers = new Set(queryStrikers.filter(Boolean));
 
+    // STRIKER:
+    // - same character, same slot: normal
+    // - same character exists in the query but is in another slot: yellow
+    // - this queried slot is occupied by a different character not in the query: red
     for (let i = 0; i < 4; i++) {
-      if (!query[i]) continue;
-      if (actual[i] === query[i]) continue;
+      const actualName = actual[i];
+      const expectedName = queryStrikers[i];
+      if (!actualName) continue;
+      if (expectedName && actualName === expectedName) continue;
 
-      if (actualStrikers.includes(query[i])) {
+      if (wantedStrikers.has(actualName)) {
         cards[i]?.classList.add("position-mismatch");
-      } else {
+      } else if (expectedName) {
         cards[i]?.classList.add("character-mismatch");
       }
     }
 
-    // SP1 / SP2 are treated as interchangeable. A queried SP is only red when absent.
+    // SP1 / SP2 are interchangeable. Only replacement characters are red.
+    const querySp = query.slice(4, 6).filter(Boolean);
+    if (!querySp.length) return;
+
+    const wantedSp = new Set(querySp);
     const actualSp = actual.slice(4, 6);
-    for (let i = 4; i < 6; i++) {
-      if (!query[i]) continue;
-      if (!actualSp.includes(query[i])) cards[i]?.classList.add("character-mismatch");
-    }
+    const missingCount = querySp.filter((name) => !actualSp.includes(name)).length;
+    if (!missingCount) return;
+
+    const replacementIndexes = [4, 5].filter((i) => actual[i] && !wantedSp.has(actual[i]));
+    replacementIndexes.slice(0, missingCount).forEach((i) => {
+      cards[i]?.classList.add("character-mismatch");
+    });
   }
 
   function applyCard(card) {
