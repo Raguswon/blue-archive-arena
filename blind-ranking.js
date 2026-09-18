@@ -68,6 +68,7 @@
   function avatar(name) {
     const wrap = document.createElement("div");
     wrap.className = "char-avatar battle-avatar";
+    wrap.dataset.studentName = name;
 
     const localUrl = window.ARENA_AVATARS?.[name] || "";
     const remoteUrl = remoteAvatarUrl(name);
