@@ -158,6 +158,7 @@
   function avatar(name, cls = "") {
     const wrap = document.createElement("div");
     wrap.className = `char-avatar ${cls}`;
+    wrap.dataset.studentName = name;
     const url = iconUrl(name);
     if (url) {
       const img = new Image();
