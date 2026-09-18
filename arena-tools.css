@@ -1,0 +1,100 @@
+/* Rank calculator + student metadata tooltip */
+.rank-tool {
+  margin-top: 18px;
+}
+.rank-tool-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+.rank-calc {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(180px, .7fr);
+  gap: 12px;
+  align-items: stretch;
+}
+.rank-input-wrap,
+.rank-output {
+  background: rgba(255,255,255,.62);
+  border: 1px solid rgba(148,163,184,.28);
+  border-radius: 18px;
+  padding: 14px 16px;
+}
+.rank-input-wrap {
+  display: grid;
+  gap: 7px;
+}
+.rank-input-wrap span,
+.rank-output span {
+  color: #667085;
+  font-size: 13px;
+  font-weight: 700;
+}
+.rank-input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #20243a;
+  font: inherit;
+  font-size: 22px;
+  font-weight: 800;
+}
+.rank-output {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.rank-output strong {
+  color: #4f61d8;
+  font-size: 28px;
+  line-height: 1;
+}
+
+.student-tooltip {
+  position: fixed;
+  z-index: 10000;
+  width: max-content;
+  min-width: 210px;
+  max-width: min(300px, calc(100vw - 24px));
+  padding: 11px 13px;
+  border: 1px solid rgba(148,163,184,.35);
+  border-radius: 14px;
+  background: rgba(255,255,255,.97);
+  box-shadow: 0 14px 38px rgba(44,51,88,.18);
+  color: #20243a;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .12s ease, transform .12s ease;
+}
+.student-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.student-tooltip-name {
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 800;
+}
+.student-tooltip-grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 4px 14px;
+  font-size: 12px;
+}
+.student-tooltip-grid span:nth-child(odd) {
+  color: #7a8199;
+}
+.student-tooltip-grid span:nth-child(even) {
+  font-weight: 700;
+  text-align: right;
+}
+
+@media (max-width: 700px) {
+  .rank-calc { grid-template-columns: 1fr; }
+  .rank-output strong { font-size: 24px; }
+}
