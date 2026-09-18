@@ -1,26 +1,35 @@
 /* Rank calculator + student metadata tooltip */
 .rank-tool {
-  margin-top: 18px;
+  margin-top: 14px;
+}
+.rank-tool-inline {
+  padding-top: 13px;
+  border-top: 1px solid rgba(110,120,170,.14);
 }
 .rank-tool-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
-  margin-bottom: 12px;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.rank-inline-title {
+  color: #4d536d;
+  font-size: 14px;
+  font-weight: 900;
 }
 .rank-calc {
   display: grid;
-  grid-template-columns: minmax(180px, 1fr) minmax(180px, .7fr);
-  gap: 12px;
+  grid-template-columns: minmax(180px, 1fr) minmax(160px, .72fr);
+  gap: 9px;
   align-items: stretch;
 }
 .rank-input-wrap,
 .rank-output {
-  background: rgba(255,255,255,.62);
-  border: 1px solid rgba(148,163,184,.28);
-  border-radius: 18px;
-  padding: 14px 16px;
+  background: rgba(255,255,255,.50);
+  border: 1px solid rgba(148,163,184,.24);
+  border-radius: 13px;
+  padding: 9px 12px;
 }
 .rank-input-wrap {
   display: grid;
@@ -39,7 +48,7 @@
   background: transparent;
   color: #20243a;
   font: inherit;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 800;
 }
 .rank-output {
@@ -50,7 +59,7 @@
 }
 .rank-output strong {
   color: #4f61d8;
-  font-size: 28px;
+  font-size: 22px;
   line-height: 1;
 }
 
@@ -136,6 +145,12 @@
 }
 
 @media (max-width: 700px) {
+  .rank-tool-inline { margin-top: 10px; padding-top: 10px; }
+  .rank-calc { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .rank-input-wrap, .rank-output { padding: 8px 9px; }
+  .rank-input { font-size: 16px; height: 38px; padding: 0; }
+  .rank-output strong { font-size: 20px; }
+}
+@media (max-width: 420px) {
   .rank-calc { grid-template-columns: 1fr; }
-  .rank-output strong { font-size: 24px; }
 }
