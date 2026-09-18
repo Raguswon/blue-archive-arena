@@ -30,8 +30,8 @@
       rankResult.textContent = "—";
       return;
     }
-    const value = rank * 0.7;
-    rankResult.textContent = Number.isInteger(value) ? String(value) : String(Math.round(value * 10) / 10);
+    const value = Math.floor(rank * 0.7);
+    rankResult.textContent = String(value);
   }
 
   function updateRankLanguage() {
