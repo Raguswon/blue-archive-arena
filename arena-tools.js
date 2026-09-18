@@ -83,8 +83,6 @@
         { label:"攻撃タイプ", value:attack || "—", icon:officialIcons.attack, tone:attackTone[attack] || "" },
         { label:"防御タイプ", value:defense || "—", icon:officialIcons.defense, tone:defenseTone[defense] || "" },
         { label:"射程", value:range ?? "—", icon:officialIcons.range },
-        { label:"種別", value:type || "—" },
-        { label:"ポジション", value:position || "—" },
         { label:"役割", value:role || "—", icon:roleIcon[role] || "" },
         { label:"遮蔽", value:cover === true ? "あり" : cover === false ? "なし" : "—", icon:officialIcons.cover },
       ];
@@ -93,8 +91,6 @@
       { label:"攻擊類型", value:zhAttack[attack] || attack || "—", icon:officialIcons.attack, tone:attackTone[attack] || "" },
       { label:"裝甲", value:zhDefense[defense] || defense || "—", icon:officialIcons.defense, tone:defenseTone[defense] || "" },
       { label:"射程", value:range ?? "—", icon:officialIcons.range },
-      { label:"類型", value:type || "—" },
-      { label:"位置", value:zhPosition[position] || position || "—" },
       { label:"職責", value:zhRole[role] || role || "—", icon:roleIcon[role] || "" },
       { label:"掩體", value:cover === true ? "是" : cover === false ? "否" : "—", icon:officialIcons.cover },
     ];
