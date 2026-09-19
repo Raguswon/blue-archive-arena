@@ -20,15 +20,10 @@
   font-weight: 900;
 }
 .rank-calc {
-  width: 165px;
-}
-.rank-route-result {
-  margin-left: auto;
-  color: #4f61d8;
-  font-size: clamp(17px, 1.5vw, 22px);
-  line-height: 1.2;
-  white-space: nowrap;
-  letter-spacing: .01em;
+  display: grid;
+  grid-template-columns: 165px minmax(0, 1fr);
+  gap: 9px;
+  align-items: stretch;
 }
 .rank-input-wrap,
 .rank-output {
@@ -60,8 +55,8 @@
 .rank-output {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  justify-content: center;
+  min-width: 0;
 }
 .rank-output strong {
   color: #4f61d8;
@@ -154,13 +149,12 @@
 
 @media (max-width: 700px) {
   .rank-tool-inline { margin-top: 10px; padding-top: 10px; }
-  .rank-calc { width: 150px; }
+  .rank-calc { grid-template-columns: 150px minmax(0, 1fr); gap: 6px; }
   .rank-input-wrap, .rank-output { padding: 8px 9px; }
-  .rank-route-result { font-size: 18px; }
   .rank-input { font-size: 16px; height: 38px; padding: 0; }
   .rank-output strong { font-size: 20px; }
 }
 @media (max-width: 420px) {
-  .rank-tool-head { align-items: flex-start; }
-  .rank-route-result { width: 100%; margin-left: 0; white-space: normal; }
+  .rank-calc { grid-template-columns: 1fr; }
+  .rank-output strong { white-space: normal; }
 }
