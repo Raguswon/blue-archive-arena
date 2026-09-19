@@ -31,8 +31,15 @@
       return;
     }
     const ranks = [Math.floor(rank)];
-    for (let i = 0; i < 3; i++) {
-      ranks.push(Math.floor(ranks[ranks.length - 1] * 0.7));
+    for (let i = 0; i < 3 && ranks[ranks.length - 1] > 1; i++) {
+      const current = ranks[ranks.length - 1];
+      // Normally the highest opponent is floor(rank × 0.7).
+      // At rank 6 or better, keep enough higher-ranked opponents available:
+      // e.g. rank 6 shows 3 / 4 / 5, so the best target is rank 3.
+      const next = current <= 6
+        ? Math.max(1, current - 3)
+        : Math.floor(current * 0.7);
+      ranks.push(next);
     }
     rankResult.textContent = ranks.join(" → ");
   }
@@ -42,7 +49,7 @@
     const ja = currentLang() === "ja";
     rankTool.querySelector("[data-rank-title]").textContent = ja ? "順位 × 0.7" : "名次 × 0.7";
     rankTool.querySelector("[data-rank-label]").textContent = ja ? "現在の順位" : "目前名次";
-    rankTool.querySelector("[data-rank-output]").textContent = ja ? "3回分" : "連續 3 次";
+    rankTool.querySelector("[data-rank-output]").textContent = ja ? "本日の最適ルート" : "本日最佳路線";
     rankInput.placeholder = ja ? "順位を入力" : "輸入名次";
   }
 
