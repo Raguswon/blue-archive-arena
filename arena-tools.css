@@ -59,8 +59,10 @@
 }
 .rank-output strong {
   color: #4f61d8;
-  font-size: 22px;
-  line-height: 1;
+  font-size: clamp(17px, 1.5vw, 22px);
+  line-height: 1.2;
+  white-space: nowrap;
+  letter-spacing: .01em;
 }
 
 .student-tooltip {
