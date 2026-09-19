@@ -20,7 +20,7 @@
 }
 .rank-calc {
   display: grid;
-  grid-template-columns: 260px minmax(0, 1fr);
+  grid-template-columns: 165px minmax(0, 1fr);
   gap: 9px;
   align-items: stretch;
 }
