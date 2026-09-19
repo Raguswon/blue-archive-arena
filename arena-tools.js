@@ -25,12 +25,14 @@
       rankResult.textContent = "—";
       return;
     }
-    const rank = Number(raw);
-    if (!Number.isFinite(rank) || rank < 1) {
+    const parsed = Number(raw);
+    if (!Number.isFinite(parsed)) {
       rankResult.textContent = "—";
       return;
     }
-    const ranks = [Math.floor(rank)];
+    const rank = Math.min(15001, Math.max(1, Math.floor(parsed)));
+    if (String(rank) !== raw) rankInput.value = String(rank);
+    const ranks = [rank];
     for (let i = 0; i < 3 && ranks[ranks.length - 1] > 1; i++) {
       const current = ranks[ranks.length - 1];
       // Normally the highest opponent is floor(rank × 0.7).
