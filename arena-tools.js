@@ -33,7 +33,7 @@
     const rank = Math.min(15001, Math.max(1, Math.floor(parsed)));
     if (String(rank) !== raw) rankInput.value = String(rank);
     const ranks = [rank];
-    for (let i = 0; i < 3 && ranks[ranks.length - 1] > 1; i++) {
+    for (let i = 0; i < 5 && ranks[ranks.length - 1] > 1; i++) {
       const current = ranks[ranks.length - 1];
       // Normally the highest opponent is floor(rank × 0.7).
       // At rank 6 or better, keep enough higher-ranked opponents available:
@@ -49,9 +49,8 @@
   function updateRankLanguage() {
     if (!rankTool) return;
     const ja = currentLang() === "ja";
-    rankTool.querySelector("[data-rank-title]").textContent = ja ? "順位 × 0.7" : "名次 × 0.7";
+    rankTool.querySelector("[data-rank-title]").textContent = ja ? "本日の最適ルート" : "本日最佳路線";
     rankTool.querySelector("[data-rank-label]").textContent = ja ? "現在の順位" : "目前名次";
-    rankTool.querySelector("[data-rank-output]").textContent = ja ? "本日の最適ルート" : "本日最佳路線";
     rankInput.placeholder = ja ? "順位を入力" : "輸入名次";
   }
 
