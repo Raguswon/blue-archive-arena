@@ -30,8 +30,11 @@
       rankResult.textContent = "—";
       return;
     }
-    const value = Math.floor(rank * 0.7);
-    rankResult.textContent = String(value);
+    const ranks = [Math.floor(rank)];
+    for (let i = 0; i < 3; i++) {
+      ranks.push(Math.floor(ranks[ranks.length - 1] * 0.7));
+    }
+    rankResult.textContent = ranks.join(" → ");
   }
 
   function updateRankLanguage() {
@@ -39,7 +42,7 @@
     const ja = currentLang() === "ja";
     rankTool.querySelector("[data-rank-title]").textContent = ja ? "順位 × 0.7" : "名次 × 0.7";
     rankTool.querySelector("[data-rank-label]").textContent = ja ? "現在の順位" : "目前名次";
-    rankTool.querySelector("[data-rank-output]").textContent = ja ? "× 0.7 の結果" : "× 0.7 結果";
+    rankTool.querySelector("[data-rank-output]").textContent = ja ? "3回分" : "連續 3 次";
     rankInput.placeholder = ja ? "順位を入力" : "輸入名次";
   }
 
